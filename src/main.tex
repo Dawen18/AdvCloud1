@@ -40,7 +40,7 @@
         \center{\includegraphics[width=\textwidth]{assets/drupal_db_cost.png}}
         \caption{\label{rds-costs}Coûts instance RDS}
     \end{figure}
-    Comme on peux le voir sur la figure \ref{rds-costs}, Le coût mensuel d'une instance RDS de classe db.t2.micro est de 17.75\$
+    Comme on peux le voir sur la figure~\ref{rds-costs}, Le coût mensuel d'une instance RDS de classe db.t2.micro est de 17.75\$
 
     \section{Tache 4}\label{sec:task-4}
 
@@ -49,7 +49,7 @@
         \caption{\label{ami-details}Détail de l'image crée}
     \end{figure}
 
-    La figure \ref{ami-details} nous montre les détails de l'AMI crée.
+    La figure~\ref{ami-details} nous montre les détails de l'AMI crée.
     Le cout d'une AMI dépend du cout du snashot de l'instance EC2.
     Dans notre cas, un disque de 10 Go était sur l'instance donc cela nous fait un snapshot de 10 Go ce qui selon le calculateur AWS coute 0.50\$ par mois
 
@@ -70,12 +70,12 @@
         \caption{\label{dns-ip}Adresse ip du load balancer avec nslookup}
     \end{figure}
 
-    Sur la figure \ref{ec2-ip}, on peux voir que l'adresse IP publique de l'instance EC2 est: 3.87.103.175 or, lors du
-    dnslookup que l'on peux voir sur la figure \ref{dns-ip} on obtient deux adresses IP mais que aucune n'est celle de l'instance.
+    Sur la figure~\ref{ec2-ip}, on peux voir que l'adresse IP publique de l'instance EC2 est: 3.87.103.175 or, lors du
+    dnslookup que l'on peux voir sur la figure~\ref{dns-ip} on obtient deux adresses IP mais que aucune n'est celle de l'instance.
     Ceci est du au fait que le load balancer n'expose pas les adresses IP de l'instance pour pouvoir rediriger vers l'instance qu'il a choisi.
     De plus, cela permet aussi que si un instance vient à être indisponible, le load balancer redirigera vers une autre de maniètre tranparente pour l'utilisateur.
 
-    Su la figure \ref{lb-ip}, on peux voir que les adresses IP pour la vérification de sante de l'instance sont des adresse de réseau interne de AWS.
+    Su la figure~\ref{lb-ip}, on peux voir que les adresses IP pour la vérification de sante de l'instance sont des adresse de réseau interne de AWS.
 
     \section{Tache 6}\label{sec:task-6}
 
@@ -94,12 +94,43 @@
         \caption{\label{total-cost-reserved}Cout total mensuel du labo avec 1 EC2 et 1 RDS réservée}
     \end{figure}
 
-    Sur la figure \ref{archi} on peux voir l'architecture globale avec le load balancer, les instance et la base de donnée.
+    Sur la figure~\ref{archi} on peux voir l'architecture globale avec le load balancer, les instance et la base de donnée.
     Le cout mensuel de cette architecture est de 52.55\$.
-    Ce cout peux être considérablement diminué si on prend une instance EC2 réservée et l'instance RDS réservée comme on peux le voir sur la figure \ref{total-cost-reserved}.
+    Ce cout peux être considérablement diminué si on prend une instance EC2 réservée et l'instance RDS réservée comme on peux le voir sur la figure~\ref{total-cost-reserved}.
     Si on divise le cous d'achat des instance par 36 mois cela nous fait un cout mensuel de 8.81\$ soit un cout total mensuel de 40.41\$ par mois.
 
+    \section{Tache 7}\label{sec:task-7}
 
+    \begin{figure}
+        \center{\includegraphics[width=\textwidth]{assets/monitoring_load_balancer.png}}
+        \caption{\label{lb-monit}Courbe de monitoring des instances AWS}
+    \end{figure}
 
+    \begin{figure}
+        \center{\includegraphics[width=\textwidth]{assets/jmeter.png}}
+        \caption{\label{jmeter}Résultats avec Jmeter}
+    \end{figure}
+
+    \begin{figure}
+        \center{\includegraphics[width=\textwidth]{assets/nslookup.png}}
+        \caption{\label{nslookup}NSlookup avant et après la monté en charge.}
+    \end{figure}
+
+    Comme on peux le voir dans la figure~\ref{lb-monit}, la charge est bien répartie sur les deux instances.
+
+    Sur la figure~\ref{jmeter}, on peux voir que vers la fin du test, la latence augmente considérablement.
+
+    On peux voir avec la figure~\ref{nslookup} que les adresses IP retournée sont toujours les mêmes mais pas dans le même ordre.
+
+    Comme suggestion de changement, il peux y avoir l'exeecution du code javascript de la page.
+    Ceci dans le but d'éxecuter les requètes AJAX qui y sont mais à condition qu'elles soient sur le même hote qu celui qui est testé.
+
+    \section{Tache 8}\label{sec:task-8}
+
+    Lorsque nous supprimons manuellement une instance ou qu’on l'arrête,
+    la charge moyenne de CPU dépasse les 30\% et un nouvelle instance est créée.
+    Lorsque nous faisons monter la charge CPU d’une instance à 100\%,
+    de nouvelles instances sont créées pour faire baisser la moyenne et atteindre une valeur comprise entre 10 et 30\%.
+    Puis, lorsque la charge moyenne devient inférieure à 10\% une instance est supprimée.
 
 \end{document}
